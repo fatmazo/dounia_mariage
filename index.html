@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Dounia & Foulan - Invitation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="site-container" id="siteContainer">
+
+        <!-- ENVELOPPE FERMÉE -->
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <img src="images/invitation-card.png" alt="Cliquez pour ouvrir">
+            <div class="open-hint">
+                <i class="fas fa-chevron-down"></i> Cliquez pour ouvrir
+            </div>
+        </div>
+
+        <!-- PAGE D'INVITATION -->
+        <div class="invitation-page">
+            
+            <img src="images/flowers.png" class="floral-corner floral-tl" alt="Fleur décorative">
+            <img src="images/flowers.png" class="floral-corner floral-tr" alt="Fleur décorative">
+            <img src="images/flowers.png" class="floral-corner floral-bl" alt="Fleur décorative">
+            <img src="images/flowers.png" class="floral-corner floral-br" alt="Fleur décorative">
+
+            <img src="images/doves.png" class="img-doves" alt="Colombes">
+
+            <div class="title">
+                Dounia <span class="ampersand">&</span> Foulan
+            </div>
+            <div class="subtitle">
+                Vous invitent à leur union
+            </div>
+
+            <img src="images/rings.png" class="img-rings" alt="Alliances">
+
+            <div class="date-section">
+                <div class="day-number">01</div>
+                <div class="month-year">MARS · 2027</div>
+            </div>
+            <div class="time-section">
+                <i class="far fa-clock" style="margin-right: 4px;"></i> 14h30
+            </div>
+
+            <div class="lieu-details">
+                <div class="lieu-item">
+                    <i class="fas fa-map-pin"></i>
+                    <div class="label">Cérémonie & Réception</div>
+                    <div class="value">Salle des Fêtes Boushaki</div>
+                </div>
+                <div class="lieu-item">
+                    <i class="fas fa-utensils"></i>
+                    <div class="label">Dîner</div>
+                    <div class="value">Boudouaou</div>
+                </div>
+            </div>
+
+            <img src="images/cake.png" class="img-cake" alt="Gâteau de mariage">
+
+            <!-- TIMER -->
+            <div class="countdown">
+                <div class="timer-title">Il reste</div>
+                <div class="timer-boxes">
+                    <div class="timer-unit">
+                        <div class="number" id="days">0</div>
+                        <div class="label">Jours</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="number" id="hours">0</div>
+                        <div class="label">Heures</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="number" id="minutes">0</div>
+                        <div class="label">Minutes</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="number" id="seconds">0</div>
+                        <div class="label">Secondes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message">
+                <span class="script">“</span> 
+                Votre présence est le plus beau des cadeaux. 
+                Nous avons hâte de partager ce jour unique avec vous.
+                <span class="script">”</span>
+            </div>
+
+            <div class="footer-hashtag">
+                <i class="fas fa-heart" style="font-size: 0.6rem;"></i> #DOUNIAETFoulan
+            </div>
+
+            <!-- BOUTON CARTE SEUL -->
+            <div class="phone-options">
+                <button id="mapBtn"><i class="fas fa-map-marker-alt"></i> Carte</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const container = document.getElementById('siteContainer');
+        
+        document.getElementById('envelopeWrapper').addEventListener('click', function(e) {
+            container.classList.add('open');
+        });
+
+        document.getElementById('mapBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            window.open('https://maps.app.goo.gl/RnfqFWv7RrLAek1JA', '_blank');
+        });
+
+        const targetDate = new Date('2027-03-01T14:30:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').innerText = 0;
+                document.getElementById('hours').innerText = 0;
+                document.getElementById('minutes').innerText = 0;
+                document.getElementById('seconds').innerText = 0;
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+</html>
